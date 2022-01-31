@@ -34,7 +34,7 @@ Array.prototype.pushArray = function () {
 
 moreItems.forEach(el => {
 	el.addEventListener("click", () => {
-		el.classList.toggle("_active")
+		el.classList.toggle("_active");
 	});
 });
 
@@ -176,7 +176,7 @@ if (moreButton) {
 }
 
 // Слушаем размеры окна и выполняем функции
-window.addEventListener("resize", function (e) {
+window.addEventListener("resize", function () {
 	if (moreContainer) {
 		// запускаем функцию
 		toggleElemets();
