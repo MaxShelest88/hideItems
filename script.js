@@ -76,7 +76,7 @@ function toggleElemets() {
 		hiddenItems.forEach(element => {
 			element.classList.remove('_hidden');
 		});
-	
+
 		// Возвращаем скрытые элементы обратно в массив всех элементов
 		moreItemsArrey.pushArray(hiddenItems);
 		// Очищаем массив скрытых элементов
