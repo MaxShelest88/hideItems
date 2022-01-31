@@ -33,7 +33,7 @@ Array.prototype.pushArray = function () {
 };
 
 moreItems.forEach(el => {
-	el.addEventListener("click", function () {
+	el.addEventListener("click", () => {
 		el.classList.toggle("_active")
 	});
 });
@@ -48,18 +48,16 @@ function getClientWidth() {
 function toggleElemets() {
 	visibleItemsNumber = moreContainer.getAttribute('data-visible');
 	const windowWidth = getClientWidth();
-	let element;
+	// let element;
 	//   Если ширина меньше задданой и элементы не скрыты
 	if (windowWidth <= w && !isHidden) {
 		// Кнопка появляется
 		moreButton.classList.add("_visible");
 		// Наполняем массив скрытыми элементами и удаляем их из массива всех элементов
 		hiddenItems = moreItemsArrey.splice(visibleItemsNumber);
-		for (let index = 0; index < hiddenItems.length; index++) {
-			element = hiddenItems[index];
-			// присваеваем класс _hidden и скрываем
-			element.classList.add('_hidden');
-		}
+
+		// скрываем элементы
+		hideItems(hiddenItems);
 
 		// Теперь элементы скрыты, и скрывать их больше не нужно
 		isHidden = true;
@@ -73,9 +71,7 @@ function toggleElemets() {
 			moreButton.classList.remove('_active');
 		}
 		// Показываем элементы
-		hiddenItems.forEach(element => {
-			element.classList.remove('_hidden');
-		});
+		showItems(hiddenItems);
 
 		// Возвращаем скрытые элементы обратно в массив всех элементов
 		moreItemsArrey.pushArray(hiddenItems);
@@ -85,15 +81,27 @@ function toggleElemets() {
 	}
 }
 
+function hideItems(arr) {
+	arr.forEach(element => {
+		element.classList.add('_hidden');
+	});
+}
+
+function showItems(arr) {
+	arr.forEach(element => {
+		element.classList.remove('_hidden');
+	});
+}
+
 // Считаем ширину контейнера с элементами
 function moreContainerWidth() {
 	return moreContainer.offsetWidth;
 }
 
 function setHeight() {
-	let containerWidth = moreContainerWidth();
+	const containerWidth = moreContainerWidth();
 	// Создаем массив из коллекции всех элементов (для контроля за изменением количества элементов)
-	let moreItemsArrey = Array.from(moreItems);
+	let moreItemsArrey = [...moreItems];
 	// Вычисляем количество видимых элементов
 	let visibleNumber = (hiddenItems.length > 0) ? (moreItemsArrey.length - hiddenItems.length) : moreItemsArrey.length;
 	// Создаем массив из видимых элементов
@@ -147,14 +155,10 @@ function setHeight() {
 if (moreButton) {
 	visibleItemsNumber = moreContainer.getAttribute('data-visible');
 	const windowWidth = getClientWidth();
-
 	moreButton.addEventListener("click", function () {
 		moreButton.classList.toggle("_active");
 		if (hiddenItems.length > 0) {
-			for (let index = 0; index < hiddenItems.length; index++) {
-				element = hiddenItems[index];
-				element.classList.remove('_hidden');
-			}
+			showItems(hiddenItems);
 			// Возвращаем скрытые элементы обратно в массив всех элементов
 			moreItemsArrey.pushArray(hiddenItems);
 			// Очищаем массив скрытых элементов
@@ -163,11 +167,8 @@ if (moreButton) {
 			setHeight();
 		} else {
 			hiddenItems = moreItemsArrey.splice(visibleItemsNumber);
-			for (let index = 0; index < hiddenItems.length; index++) {
-				element = hiddenItems[index];
-				// присваеваем класс _hidden
-				element.classList.add('_hidden');
-			}
+			// скрваем элементы
+			hideItems(hiddenItems);
 			// устанавливаем  высоту контейнера
 			setHeight();
 		}
