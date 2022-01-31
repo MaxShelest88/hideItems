@@ -142,12 +142,12 @@ function setHeight() {
 	}
 	let gapWidth = gap();
 	// Количество элементов в ряду
-	let ItemsInRow = (gapWidth) ? Math.floor((containerWidth + gapWidth) / (itemWidth + gapWidth)) : (containerWidth / itemWidth);
+	let ItemsInRow = (gapWidth) ? Math.round((containerWidth + gapWidth) / (itemWidth + gapWidth)) : (containerWidth / itemWidth);
 	// Количество рядов
 	let rowNumber = Math.ceil(visibleNumber / ItemsInRow);
 
 	// Вычисляем высоту и присваеваем
-	moreContainer.style.height = Math.floor((rowNumber * (itemHeight + gapWidth) - gapWidth)) + "px";
+	moreContainer.style.height = Math.round((rowNumber * (itemHeight + gapWidth) - gapWidth)) + "px";
 }
 
 
