@@ -29,30 +29,22 @@ li {
 	list-style: none;
 }
 
-body.scroll-block {
-	overflow: hidden;
-}
-
 /* Основной блок */
 
 .more-block {
+	background-color: #fff;
+	padding: 10px;
 }
 ._more-container {
-	background-color: #fff;
 	transition: all 0.3s ease 0s;
 	overflow: hidden;
 	display: grid;
 	gap: 10px;
 	grid-auto-rows: 33px;
-	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-	/* display: flex;
-	flex-wrap: wrap; */
-	padding: 0px -10px;
-	margin: 0px 0px 20px 0px;
+	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));	
 }
 ._more-item {
 	flex: 0 1 20%;
-	padding: 0 10px;
 	opacity: 1;
 }
 
@@ -110,20 +102,19 @@ body.scroll-block {
 
 ._more-button {
 	cursor: pointer;
-	display: inline-flex;
+	display: none;
 	padding: 0 46px;
-	width: 200px;
 	min-height: 50px;
 	justify-content: center;
 	align-items: center;
-	background-color: rgba(20, 109, 28, 0.333);
+	background-color: rgba(107, 214, 45, 0.829);
 	color: #fff;
 	font-size: 18px;
 	display: none;
 }
 
 ._more-button._visible {
-	display: inline-flex;
+		display: flex;
 }
 
 ._more-button span {
