@@ -69,13 +69,18 @@ function toggleElemets() {
 
 function hideItems(arr) {
 	arr.forEach(element => {
-		element.classList.add('_hidden');
+		element.classList.add('fadeout');
+		setTimeout(() => {
+			element.classList.add('_hidden');
+		}, 200);
+		element.classList.remove('fadein');
 	});
 }
 
 function showItems(arr) {
 	arr.forEach(element => {
-		element.classList.remove('_hidden');
+		element.classList.remove('fadeout', '_hidden');
+		element.classList.add('fadein');
 	});
 }
 
@@ -113,9 +118,11 @@ function setHeight() {
 						let secElementPosition = secElemet.offsetLeft;
 						let elementY = element.offsetTop + element.getBoundingClientRect().height;
 						let secElementY = secElemet.offsetTop;
+						// если горизонтально
 						if (secElementPosition > elementPosition) {
 							return secElementPosition - elementPosition;
 						}
+						// если вертикально
 						return secElementY - elementY;
 					}
 					// иначе = 0

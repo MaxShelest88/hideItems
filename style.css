@@ -36,7 +36,6 @@ body.scroll-block {
 /* Основной блок */
 
 .more-block {
-
 }
 ._more-container {
 	background-color: #fff;
@@ -54,6 +53,7 @@ body.scroll-block {
 ._more-item {
 	flex: 0 1 20%;
 	padding: 0 10px;
+	opacity: 1;
 }
 
 .content {
@@ -71,6 +71,37 @@ body.scroll-block {
 
 ._more-item._hidden {
 	display: none;
+	/* transform: scale(0); */
+	/* transition: all 0.3s ease 0s;
+	visibility: hidden;
+	opacity: 0; */
+	opacity: 0;
+}
+
+.fadeout {
+	animation: fadeout 0.3s ease-out;
+}
+
+@keyframes fadeout {
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+
+.fadein{
+	animation: fadein 0.3s ease-in;
+}
+
+@keyframes fadein {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
 }
 
 ._more-item._active .content {
