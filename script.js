@@ -3,7 +3,6 @@
 // Для задания количества видимых элементов пишем в контейнере атрибут data-visible="10" - с количеством видимых объектов, остальные скроются
 // Если между элементами есть какое-то пустое место, то пишем атрибут data-gap
 
-
 const moreContainer = document.querySelector('._more-container');
 const moreButton = document.querySelector('._more-button');
 const moreItems = document.querySelectorAll('._more-item');
@@ -22,15 +21,6 @@ if (moreContainer) {
 	toggleElemets();
 	setHeight();
 }
-
-
-// Функция добавления в массив другого массива
-Array.prototype.pushArray = function () {
-	var toPush = this.concat.apply([], arguments);
-	for (var i = 0, len = toPush.length; i < len; ++i) {
-		this.push(toPush[i]);
-	}
-};
 
 moreItems.forEach(el => {
 	el.addEventListener("click", () => {
@@ -72,11 +62,7 @@ function toggleElemets() {
 		}
 		// Показываем элементы
 		showItems(hiddenItems);
-
-		// Возвращаем скрытые элементы обратно в массив всех элементов
-		moreItemsArrey.pushArray(hiddenItems);
-		// Очищаем массив скрытых элементов
-		hiddenItems.length = 0;
+		returnHiddenItems();
 		isHidden = false;
 	}
 }
@@ -101,7 +87,7 @@ function moreContainerWidth() {
 function setHeight() {
 	const containerWidth = moreContainerWidth();
 	// Создаем массив из коллекции всех элементов (для контроля за изменением количества элементов)
-	let moreItemsArrey = [...moreItems];
+	moreItemsArrey = [...moreItems];
 	// Вычисляем количество видимых элементов
 	let visibleNumber = (hiddenItems.length > 0) ? (moreItemsArrey.length - hiddenItems.length) : moreItemsArrey.length;
 	// Создаем массив из видимых элементов
@@ -111,7 +97,7 @@ function setHeight() {
 	let itemHeight = 0;
 
 	// Функция для вычисления этого пространтсво
-	let gap = function () {
+	const gap = function () {
 		if (moreContainer) {
 			const dataGap = moreContainer.hasAttribute('data-gap');
 			if (visibleItemsArrey.length > 0) {
@@ -140,11 +126,11 @@ function setHeight() {
 		}
 
 	}
-	let gapWidth = gap();
+	const gapWidth = gap();
 	// Количество элементов в ряду
-	let ItemsInRow = (gapWidth) ? Math.round((containerWidth + gapWidth) / (itemWidth + gapWidth)) : (containerWidth / itemWidth);
+	let itemsInRow = (gapWidth) ? Math.round((containerWidth + gapWidth) / (itemWidth + gapWidth)) : (containerWidth / itemWidth);
 	// Количество рядов
-	let rowNumber = Math.ceil(visibleNumber / ItemsInRow);
+	let rowNumber = Math.ceil(visibleNumber / itemsInRow);
 
 	// Вычисляем высоту и присваеваем
 	moreContainer.style.height = Math.round((rowNumber * (itemHeight + gapWidth) - gapWidth)) + "px";
@@ -159,10 +145,7 @@ if (moreButton) {
 		moreButton.classList.toggle("_active");
 		if (hiddenItems.length > 0) {
 			showItems(hiddenItems);
-			// Возвращаем скрытые элементы обратно в массив всех элементов
-			moreItemsArrey.pushArray(hiddenItems);
-			// Очищаем массив скрытых элементов
-			hiddenItems.length = 0;
+			returnHiddenItems();
 			// устанавливаем  высоту контейнера
 			setHeight();
 		} else {
@@ -173,6 +156,13 @@ if (moreButton) {
 			setHeight();
 		}
 	});
+}
+
+function returnHiddenItems() {
+	// Возвращаем скрытые элементы обратно в массив всех элементов
+	moreItemsArrey = [...hiddenItems];
+	// Очищаем массив скрытых элементов
+	hiddenItems.length = 0;
 }
 
 // Слушаем размеры окна и выполняем функции
